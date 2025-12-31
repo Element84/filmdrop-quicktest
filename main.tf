@@ -19,11 +19,11 @@ module "filmdrop" {
   #  - example: reference a branch, tag, etc. (any value that "git checkout" supports)
   #      source  = "git::https://github.com/Element84/filmdrop-aws-tf-modules.git?ref=main"
   #      source  = "git::https://github.com/Element84/filmdrop-aws-tf-modules.git?ref=v2.55.0"
-  source  = "git::https://github.com/Element84/filmdrop-aws-tf-modules.git?ref=main"
+  source = "git::https://github.com/Element84/filmdrop-aws-tf-modules.git?ref=main"
 
   # You may need to set this to your Route53 hosted zone for testing some components of FilmDrop, but for many its not
   # required/you can leave this as-is
-  domain_zone            = ""
+  domain_zone = ""
 
   # These can often be left as-is, but feel free to edit them. The local.project_ident string will be used to help
   # identify your project resources within the AWS account you're deploying to
@@ -180,6 +180,40 @@ module "filmdrop" {
   #     include_historical_ingest        = false
   #     source_sns_arn                   = ""
   #     include_ongoing_ingest           = false
+  #   }
+  # }
+  #endregion
+
+  #region titiler Testing
+  # ==============================
+  # To test titiler:
+  # - Set deploy_titiler = true above
+  # - Uncomment titiler_inputs below
+  # ==============================
+  # titiler_inputs = {
+  #   app_name                       = "titiler"
+  #   domain_alias                   = ""
+  #   deploy_cloudfront              = false
+  #   version                        = "v0.14.0-1.0.5"
+  #   authorized_s3_arns             = []
+  #   mosaic_titiler_waf_allowed_url = "test.filmdrop.io"
+  #   mosaic_titiler_host_header     = ""
+  #   mosaic_tile_timeout            = 30
+  #   web_acl_id                     = ""
+  #   is_private_endpoint            = true
+  #   api_method_authorization_type  = "NONE"
+  #   private_certificate_arn        = ""
+  #   # vpce_private_dns_enabled                  = true
+  #   private_api_additional_security_group_ids = null
+  #   auth_function = {
+  #     cf_function_name             = ""
+  #     cf_function_runtime          = "cloudfront-js-2.0"
+  #     cf_function_code_path        = ""
+  #     attach_cf_function           = false
+  #     cf_function_event_type       = "viewer-request"
+  #     create_cf_function           = false
+  #     create_cf_basicauth_function = false
+  #     cf_function_arn              = ""
   #   }
   # }
   #endregion
