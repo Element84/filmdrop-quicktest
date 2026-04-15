@@ -1,5 +1,5 @@
 locals {
-  project_ident = "a1b2"
+  project_ident = "jai-jk"
 }
 
 module "filmdrop" {
@@ -35,13 +35,14 @@ module "filmdrop" {
   # Infrastructure flags
   deploy_vpc_search                        = true # either this, or deploy_vpc, is required
   deploy_log_archive                       = true # required by numerous modules, recommend leaving as true
-  deploy_cirrus                            = false
+  deploy_cirrus                            = true
   deploy_cirrus_dashboard                  = false
   deploy_stac_server_opensearch_serverless = false
   deploy_stac_server                       = false
   deploy_stac_server_outside_vpc           = false
   deploy_titiler                           = false
-  deploy_console_ui                        = false
+  deploy_filmdrop_titiler                  = false
+  deploy_filmdrop_ui                       = false
   deploy_local_stac_server_artifacts       = false
   deploy_waf_rule                          = false
   deploy_analytics                         = false
@@ -55,62 +56,63 @@ module "filmdrop" {
   # - Paste your feeders/workflows/tasks into the /cirrus folder at the root of this repo. Note
   #   that /cirrus-examples contains some starting points.
   # ==============================
-  # cirrus_inputs = {
-  #   # feeder_definitions_dir                       = "cirrus/feeders"
-  #   # workflow_definitions_dir                     = "cirrus/workflows"
-  #   # task_definitions_dir                         = "cirrus/tasks"
-  #   # task_batch_compute_definitions_dir           = "cirrus/tasks-batch"
+  cirrus_inputs = {
+    # feeder_definitions_dir                       = "cirrus/feeders"
+    # workflow_definitions_dir                     = "cirrus/workflows"
+    # task_definitions_dir                         = "cirrus/tasks"
+    # task_batch_compute_definitions_dir           = "cirrus/tasks-batch"
 
-  #   workflow_definitions_variables               = null
-  #   workflow_definitions_variables_ssm           = null
-  #   task_batch_compute_definitions_variables     = null
-  #   task_batch_compute_definitions_variables_ssm = null
-  #   task_definitions_variables                   = null
-  #   task_definitions_variables_ssm               = null
+    workflow_definitions_variables               = null
+    workflow_definitions_variables_ssm           = null
+    task_batch_compute_definitions_variables     = null
+    task_batch_compute_definitions_variables_ssm = null
+    task_definitions_variables                   = null
+    task_definitions_variables_ssm               = null
 
-  #   data_bucket                               = "" # If left blank the deployment will create the data bucket
-  #   payload_bucket                            = "" # If left blank the deployment will create the payload bucket
-  #   log_level                                 = "DEBUG"
-  #   deploy_alarms                             = true
-  #   api_rest_type                             = "EDGE"
-  #   private_api_additional_security_group_ids = null
-  #   private_certificate_arn                   = ""
-  #   domain_alias                              = ""
-  #   custom_alarms = {
-  #     warning  = {}
-  #     critical = {}
-  #   }
-  #   process = {
-  #     sqs_timeout                   = 180
-  #     sqs_max_receive_count         = 5
-  #     sqs_cross_account_sender_arns = []
-  #   }
-  #   state = {
-  #     timestream_magnetic_store_retention_period_in_days = 93
-  #     timestream_memory_store_retention_period_in_hours  = 24
-  #   }
-  #   api_lambda = {
-  #     timeout = 10
-  #     memory  = 512
-  #   }
-  #   process_lambda = {
-  #     timeout              = 10
-  #     memory               = 512
-  #     reserved_concurrency = 16
-  #   }
-  #   update_state_lambda = {
-  #     timeout = 15
-  #     memory  = 512
-  #   }
-  #   pre_batch_lambda = {
-  #     timeout = 15
-  #     memory  = 512
-  #   }
-  #   post_batch_lambda = {
-  #     timeout = 15
-  #     memory  = 512
-  #   }
-  # }
+    data_bucket                               = "" # If left blank the deployment will create the data bucket
+    payload_bucket                            = "" # If left blank the deployment will create the payload bucket
+    log_level                                 = "DEBUG"
+    deploy_alarms                             = true
+    deploy_api                                = true
+    api_rest_type                             = "EDGE"
+    private_api_additional_security_group_ids = null
+    private_certificate_arn                   = ""
+    domain_alias                              = ""
+    custom_alarms = {
+      warning  = {}
+      critical = {}
+    }
+    process = {
+      sqs_timeout                   = 180
+      sqs_max_receive_count         = 5
+      sqs_cross_account_sender_arns = []
+    }
+    state = {
+      timestream_magnetic_store_retention_period_in_days = 93
+      timestream_memory_store_retention_period_in_hours  = 24
+    }
+    api_lambda = {
+      timeout = 10
+      memory  = 512
+    }
+    process_lambda = {
+      timeout              = 10
+      memory               = 512
+      reserved_concurrency = 16
+    }
+    update_state_lambda = {
+      timeout = 15
+      memory  = 512
+    }
+    pre_batch_lambda = {
+      timeout = 15
+      memory  = 512
+    }
+    post_batch_lambda = {
+      timeout = 15
+      memory  = 512
+    }
+  }
   #endregion
 
   #region stac-server Testing
