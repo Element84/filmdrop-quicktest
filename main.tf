@@ -1,5 +1,5 @@
 locals {
-  project_ident = "jai-jk"
+  project_ident = "a1b2"
 }
 
 module "filmdrop" {
