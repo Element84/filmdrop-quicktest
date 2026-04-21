@@ -4,9 +4,9 @@ terraform {
   backend "s3" {
     # Modify bucket/region/key to point to the S3 bucket you want to use for storing your Terraform state. This bucket
     # must already exist in the AWS account you're deploying to
-    bucket         = "jai-tf-state-cirrusv2"
+    bucket         = "my-bucket"
     region         = "us-west-2"
-    key            = "terraform.tfstate"
+    key            = "myproject/terraform.tfstate"
 
     use_lockfile   = true
   }
